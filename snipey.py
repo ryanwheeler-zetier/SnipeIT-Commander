@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 import requests
 import urllib3
@@ -30,7 +31,8 @@ def get_user_id(api_base_url, api_token):
 
 def read_config():
     config = configparser.ConfigParser()
-    config.read('.config')
+    repo_path = os.path.dirname(os.path.abspath(__file__))
+    config.read_file(open(os.path.join(repo_path, '.config')))
     api_base_url = config.get('api', 'url', fallback='https://default.api.url')
     api_token = config.get('api', 'access_token', fallback='')
     user_id = get_user_id(api_base_url, api_token)
